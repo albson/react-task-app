@@ -53,5 +53,19 @@ ListStore = {
       item.completed = itemData.completed
       notifyComponents()
     })
+  },
+  destroyItem: function(itemId) {
+    var item = findItemById(itemId)
+    var deleteItem = item.deleted
+
+    var deleteRequest = $.ajax({
+      type: 'DELETE',
+      url: "https://listalous.herokuapp.com/lists/ALBERT-LIST/items/" + itemId,
+      data: { deleted: !deleteItem }
+    })
+
+    deleteRequest.done(function(itemData) {
+      ListStore.loadItems()
+    })
   }
 }
